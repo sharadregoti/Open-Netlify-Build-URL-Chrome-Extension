@@ -1,5 +1,7 @@
 # open-custom-url-chrome-extension
 
+![Example Usage](open-custom-url.png "Title")
+
 # Installation
 1. Download this repository locally
 2. Open this URL in chrome `chrome://extensions`
