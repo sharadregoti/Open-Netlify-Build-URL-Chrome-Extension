@@ -22,13 +22,14 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         // Get the active tab URL
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const currentUrl = new URL(tabs[0].url);
+            const currentTab = tabs[0]; // Get the currently active tab
 
             // Extract PR number from URL
             const prNumber = extractPrNumber(currentUrl);
             if (prNumber) {
                 // Construct a new URL based on the PR number
                 const customUrl = `https://deploy-preview-${prNumber}--tyk-docs.netlify.app/docs/nightly/${finalURL}`;
-                chrome.tabs.create({ url: customUrl });
+                chrome.tabs.create({ url: customUrl, index: currentTab.index + 1 });
             } else {
                 console.log("PR Number not found");
             }
