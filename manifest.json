@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Open Custom URL",
+    "version": "1.0",
+    "permissions": [
+        "contextMenus",
+        "tabs",
+        "activeTab"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {}
+}
