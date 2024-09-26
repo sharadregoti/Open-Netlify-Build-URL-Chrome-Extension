@@ -12,7 +12,7 @@
 ## Opening any doucment
 1. Go to the `files changed` tab of any github pull request
 2. Hover over the page link & right click on it
-3. In the `contextMenu` you should see an option called `Open Custom URL`
+3. In the `contextMenu` you should see an option called `Open Tyk Netlify URL`
 4. Click on this option & it will open the corresponding netlify deployment page.`
 
 ![Example Usage](open-tyk-netlify-url.png "Title")
