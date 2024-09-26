@@ -1,14 +1,21 @@
 {
     "manifest_version": 3,
-    "name": "Open Custom URL",
+    "name": "Open Tyk Netlify URL",
     "version": "1.0",
     "permissions": [
         "contextMenus",
         "tabs",
-        "activeTab"
+        "activeTab",
+        "scripting"
     ],
     "background": {
         "service_worker": "background.js"
     },
-    "action": {}
+    "action": {},
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ]
 }
