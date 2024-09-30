@@ -5,38 +5,36 @@ chrome.runtime.onInstalled.addListener(() => {
         title: "Open Tyk Netlify URL",
         contexts: ["link"]
     });
-
-    // Create the "Open Shared Page" context menu
-    // chrome.contextMenus.create({
-    //     id: "openSharedPage",
-    //     title: "Open Shared Page",
-    //     contexts: ["link"]
-    // });
 });
 
 // Listen for context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-    if (!info.selectionText.includes("/shared")) {
-        handleCustomUrl(info, tab);
-    } else {
-        handleSharedPage(info, tab);
+    let selectedUrl = info.selectionText
+    console.log("Selected Text", info.selectionText)
+    if (selectedUrl === undefined) {
+        if (info.linkUrl === undefined) {
+            chrome.tabs.sendMessage(tab.id, { action: "showAlert", message: `Cannot select url to open, URLs are undefined` });
+            return
+        }
+        console.log("Selected URL is undefined, going for info.linkUrl")
+        selectedUrl = info.linkUrl
     }
-    // if (info.menuItemId === "openCustomURL") {
-    //     handleCustomUrl(info, tab);
-    // } else if (info.menuItemId === "openSharedPage") {
-    //     handleSharedPage(info, tab);
-    // }
+    if (!selectedUrl.includes("/shared")) {
+        handleCustomUrl(selectedUrl, tab);
+    } else {
+        handleSharedPage(selectedUrl, tab);
+    }
 });
 
 // Handle logic for "Open Custom URL"
-function handleCustomUrl(info, tab) {
-    const originalUrl = info.selectionText;
+function handleCustomUrl(url, tab) {
+    const originalUrl = url;
     openURL(originalUrl, tab)
 }
 
 // Handle logic for "Open Shared Page"
-function handleSharedPage(info, tab) {
-    const originalUrl = info.selectionText;
+function handleSharedPage(url, tab) {
+    const originalUrl = url;
     const sharedMapping = getSharedMapping();
 
     // Extract the file name from the URL
@@ -66,8 +64,8 @@ function openURL(originalUrl, tab) {
         originalUrl = originalUrl.replace("...nt", "/content");
         console.log("Expanded URL:", originalUrl);
     }
-    if (!originalUrl.includes("/content") && originalUrl.startsWith("...")) {
-        chrome.tabs.sendMessage(tab.id, { action: "showAlert", message: `The selected file path starts with an unknow prefix (FilePath: ${originalUrl}), this case is not accounted for while writing this extension. Please open the file manually` });
+    if ((!originalUrl.includes("/content") || !originalUrl.includes("/apim") || !originalUrl.includes("/getting-started") || !originalUrl.includes("/getting-started")) && originalUrl.startsWith("...")) {
+        chrome.tabs.sendMessage(tab.id, { action: "showAlert", message: `The selected file path starts with an unknow prefix (FilePath: ${originalUrl}), this case is not accounted for while writing this extension. Please open the kebab menu (...) to right of the page & right click on the "view file" option or open the file manually` });
         return
     }
 

@@ -16,3 +16,7 @@
 4. Click on this option & it will open the corresponding netlify deployment page.`
 
 ![Example Usage](open-tyk-netlify-url.png "Title")
+
+or
+
+![Example Usage](open-url-using-view-file.png "Title")
