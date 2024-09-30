@@ -1,4 +1,4 @@
-# Open Netlify Build Chrome Extension
+# Open Netlify Build URL Chrome Extension
 
 # Installation
 1. Download this repository locally
